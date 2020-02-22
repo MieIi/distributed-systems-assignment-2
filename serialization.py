@@ -5,11 +5,9 @@ CT30A3401 Distributed Systems
 Data serialization
 """
 import os
-import time
 import timeit
 import pickle
 import matplotlib.pyplot as plt 
-import csv
 import dicttoxml
 import json
 import msgpack
@@ -88,11 +86,13 @@ de_funs = [native_deserialize(),
 for f in funs:
     ser_times.append(timeit.timeit(str(f), number=1))
 
-
+"""
 plt.figure()
 plt.title("Serialization times")
 plt.bar(["Pickle (native)", "XML", "JSON", "MessagePack", "YAML"], ser_times)
 #plt.show()
+"""
+formats = ["Pickle (native)", "XML", "JSON", "MessagePack", "YAML"]
 
 
 # Plot file sizes
@@ -101,19 +101,34 @@ sizes = []
 
 for f in files:
     sizes.append(os.path.getsize(f))
-
+"""
 plt.figure()
 plt.title("File sizes (bytes)")
 plt.bar(["Pickle (native)", "XML", "JSON", "MessagePack", "YAML"], sizes)
 #plt.show()
-
+"""
 
 # De-serialization times
 for f in de_funs:
     deser_times.append(timeit.timeit(str(f), number=1))
-
+"""
 plt.figure()
 plt.title("De-serialization times")
 plt.bar(["Pickle (native)", "XML", "JSON", "MessagePack", "YAML"], deser_times)
 plt.show()
+"""
+
+print("\nSerialization times: ")
+for i in range(0, 5):
+	print(formats[i] + ": " + str(ser_times[i]) + " seconds")
+
+
+print("\nSerialized data size: ")
+for i in range(0, 5):
+	print(formats[i] + ": " + str(sizes[i]) + " bytes")
+
+print("\nDe-serialization times: ")
+for i in range(0, 5):
+	print(formats[i] + ": " + str(deser_times[i]) + " seconds")
+
 
